@@ -12,33 +12,30 @@ public class ArrayStorage {
         size = 0;
     }
 
-    void save(Resume r) {
-        storage[size] = r;
+    void save(Resume resume) {
+        storage[size] = resume;
         size++;
     }
 
     Resume get(String uuid) {
-        Resume[] all = getAll();
-        for (Resume r : all) {
-            if (r.uuid.equals(uuid)) return r;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(uuid)) return storage[i];
         }
         return null;
     }
 
     void delete(String uuid) {
+        int deleteResumeIndex = -1;
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                storage[i] = null;
+                deleteResumeIndex = i;
                 break;
             }
         }
-        for (int i = 0; i < size - 1; i++) {
-            if (storage[i] == null) {
-                storage[i] = storage[i + 1];
-                storage[i + 1] = null;
-            }
+        if (size - deleteResumeIndex >= 0 && deleteResumeIndex != -1) {
+            System.arraycopy(storage, deleteResumeIndex + 1, storage, deleteResumeIndex, size - deleteResumeIndex);
+            size--;
         }
-        size--;
     }
 
     /**
