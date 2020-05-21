@@ -32,8 +32,11 @@ public class ArrayStorage {
                 break;
             }
         }
-        if (size - deleteResumeIndex >= 0 && deleteResumeIndex != -1) {
-            System.arraycopy(storage, deleteResumeIndex + 1, storage, deleteResumeIndex, size - deleteResumeIndex);
+        if (deleteResumeIndex != -1) {
+            for (int i = deleteResumeIndex; i < size - 1; i++) {
+                storage[i] = storage[i + 1];
+            }
+            storage[size] = null;
             size--;
         }
     }
